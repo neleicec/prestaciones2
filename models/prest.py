@@ -25,10 +25,10 @@ class prest(models.Model):
 		required=True, 
 		related='name.concepto_vac', 
 		readonly=True)
-	tasa_t=fields.Float(
+	tasa_trimestral=fields.Float(
 		string='Tasa Trimestral',
 		required=True)
-	historico_prest = fields.Float(
+	historicoPrestaciones = fields.Float(
 		string='Histórico', 
 		required=True, 
 		related='name.historico_prestaciones', 
@@ -36,7 +36,7 @@ class prest(models.Model):
 
  	def _dias(self):
 		return 15
-	dias_sal = fields.Integer(
+	dias_metodo_trimestral = fields.Integer(
 		string='Dias', 
 		default=_dias, 
 		readonly=True,
@@ -45,8 +45,8 @@ class prest(models.Model):
 	@api.depends('name')
 	def _saldia(self):
 		for record in self:
-			record.wage_day1 = record.sueldo / 30
-	wage_day1= fields.Float(
+			record.salario_diario = record.sueldo / 30
+	salario_diario= fields.Float(
 		string='Salario Diario', 
 		digits=(26,2), 
 		compute='_saldia', 
@@ -56,8 +56,8 @@ class prest(models.Model):
 	@api.depends('name')
 	def _alic(self):
 		for record in self:
-			record.alic_util = (((record.sueldo/30) * 30)/360)
-	alic_util= fields.Float(
+			record.alicuota_utilidades = (((record.sueldo/30) * 30)/360)
+	alicuota_utilidades= fields.Float(
 		string='Alicuota Utilidades', 
 		digits=(26,2),
 		compute='_alic', 
@@ -67,8 +67,8 @@ class prest(models.Model):
 	@api.depends('name')
 	def _vac(self):
 		for record in self:
-			record.alic_vac = ((record.sueldo/30)*(record.vac_concepto) / 360)
-	alic_vac= fields.Float(
+			record.alicuota_vacaciones = ((record.sueldo/30)*(record.vac_concepto) / 360)
+	alicuota_vacaciones= fields.Float(
 		string='Alicuota Vacaciones', 
 		digits=(26,2), 
 		compute='_vac',
@@ -77,8 +77,8 @@ class prest(models.Model):
 	@api.depends('name')
 	def _int(self):
 		for record in self:
-			record.sal_int = ((record.sueldo/30)+ record.alic_util + record.vac_concepto)
-	sal_int= fields.Float(
+			record.salario_integral = ((record.sueldo/30)+ record.alicuota_utilidades + record.vac_concepto)
+	salario_integral= fields.Float(
 		string='Salario Integral', 
 		digits=(26,2), 
 		readonly=True,
@@ -88,9 +88,9 @@ class prest(models.Model):
 	@api.depends('name')
 	def _total1(self):
 		for record in self:
-			record.total_prest1 = (record.sal_int * record.dias_sal)
-	total_prest1= fields.Float(
-		string='Pago Prestaciones', 
+			record.prestamo_trimestral = (record.salario_integral * record.dias_metodo_trimestral)
+	prestamo_trimestral= fields.Float(
+		string='Acumulado Trimestral', 
 		readonly=True, 
 		compute='_total1',
 		store=True)
@@ -99,21 +99,23 @@ class prest(models.Model):
 	def _trim(self):
 		for record in self:
 			if record.trimestre == 'trimestre4':
-				record.total_prest2 = (record.sal_int * record.dias_h) 
-				record.anual = (record.total_prest1 + record.total_prest2)
-	total_prest2= fields.Float(
-		string='Pago Adicional', 
+				record.prestamo_adicional = (record.salario_integral * record.dias_adicionales) 
+				record.acumulado_al_ano = (record.prestamo_trimestral + record.prestamo_adicional)
+	prestamo_adicional= fields.Float(
+		string='Acumulado Adicional', 
 		readonly=True, 
 		compute='_trim',
-		store=True)			
-	anual= fields.Float(
-		string='Total Prestaciones Anuales',
+		store=True,
+		help='Indica cuánto lleva acumulado el empleado por los dias adicionales')			
+	acumulado_al_ano= fields.Float(
+		string='Acumulado al año',
 		readonly=True,
 		compute='_trim',
 		required=True,
 		default= 0.0,
 		digits=(26,2),
-		store=True)
+		store=True,
+		help= 'indica el monto acumulado durante los "4" trimestres del año')
 
 	# CAMPOS ANUALES 
 
@@ -121,25 +123,25 @@ class prest(models.Model):
 	def _diah(self):
 		for record in self:
 			if (record.name.years_service) <= 2.0:
-				dias_h = 0.0
+				dias_adicionales = 0.0
 			else: 
 				years_service2 = float(record.name.years_service)
 				sumador = years_service2 - 1.0
 				sumadorx = sumador * 2.0 
-				record.dias_h = sumadorx
-				if(record.dias_h) >=30.0:
-					record.dias_h=30
-	dias_h= fields.Float(
+				record.dias_adicionales = sumadorx
+				if(record.dias_adicionales) >=30.0:
+					record.dias_adicionales=30
+	dias_adicionales= fields.Float(
 		string='Dias Adicionales', 
 		digits=(26,2), 
 		readonly=True, 
 		compute='_diah',
 		store=True)
-	@api.depends('tasa_t')
+	@api.depends('tasa_trimestral')
 	def _tasat(self):
 		for record in self:
-			record.interes = (record.tasa_t * record.total_prest1) / 1200
-	interes=fields.Float(
+			record.interes_trimestral = (record.tasa_trimestral * record.prestamo_trimestral) / 1200
+	interes_trimestral=fields.Float(
 		string='Interes Trimestral',
 		compute='_tasat',
 		store=True)

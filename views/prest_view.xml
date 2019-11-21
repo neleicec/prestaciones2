@@ -12,27 +12,27 @@
 							<group string="Datos del Empleado">
 								<field name="name"></field>
 								<field name="sueldo"></field>
-								<field name="wage_day1"></field>
-								<field name="sal_int"></field>
-								<field name = "historico_prest"></field>
+								<field name="salario_diario"></field>
+								<field name="salario_integral"></field>
+								<field name = "historicoPrestaciones"></field>
 							</group>
 							
 							<group string="Datos de las Prestaciones">
 								<field name="trimestre"></field>
-								<field name="dias_sal"></field>
-								<field name="dias_h"></field>
-								<field name="alic_util"></field>
-								<field name="alic_vac"></field>
+								<field name="dias_metodo_trimestral"></field>
+								<field name="dias_adicionales"></field>
+								<field name="alicuota_utilidades"></field>
+								<field name="alicuota_vacaciones"></field>
 								<field name="vac_concepto" invisible="1"></field>
 							</group>					
 							<group string="Cálculo Trimestral">
-								<field name="total_prest1"></field>
-								<field name="tasa_t"></field>
-								<field name="interes"></field>
+								<field name="prestamo_trimestral"></field>
+								<field name="tasa_trimestral"></field>
+								<field name="interes_trimestral"></field>
 							</group>
 							<group string="Cáculo Anual">
-								<field name="total_prest2"></field>
-								<field name="anual"></field>
+								<field name="prestamo_adicional"></field>
+								<field name="acumulado_al_ano"></field>
 							</group>
 						</group>
 					</sheet>

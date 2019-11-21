@@ -34,7 +34,7 @@ class anticipo_prestaciones(models.Model):
 			gs = self.env['prest'].search([])
 			for j in gs:
 				if j.name == record.name:
-					sumador_anual = sumador_anual + j.anual		
+					sumador_anual = sumador_anual + j.acumulado_al_ano		
 			record.acumulado = sumador_anual
 			if record.monto_anticipo == 0.0:
 				return
