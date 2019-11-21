@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+
+<odoo>
+    <data>
+        <report id = "report_liqui"
+                string = "Reporte de Liquidacion"
+                model = "presta"
+                report_type = "qweb-pdf"
+                name = "prestsoc1.report_liqui_template"
+        />
+        <template id = "report_liqui_template">
+            <t t-call = "report.html_container">
+                <t t-call = "report.external_layout">
+                    <t t-foreach="docs" t-as="o">
+                   
+                        <div class = "page">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td>Name</td>
+                                <td><span t-field="o.name"/></td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Pago por Prestaciones</td>
+                                <td><span t-field="o.total_total"/></td>
+                            </tr>
+                             <tr>
+                                <td>Intereses</td>
+                                <td><span t-field="o.total_interes"/></td>
+                            </tr>
+                             <tr>
+                                <td>Doblete</td>
+                                <td><span t-field="o.doblete"/></td>
+                            </tr>
+                             <tr>
+                                <td>Total a Pagar</td>
+                                <td><span t-field="o.final"/></td>
+                            </tr>
+                        </table>
+                        </div>
+                        <div class = "footer">
+                            <small> Mi footer </small>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

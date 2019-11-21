@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+
+<odoo>
+	<data>
+
+
+	<!-- Vista de Arbol -->
+		<record id="prest_view_anticipo_tree" model="ir.ui.view">
+			<field name="name">anticipo_por_prestaciones</field>
+			<field name="model">anticipo</field>
+			<field name="arch" type="xml">
+				<tree string="Anticipo">
+					<field name="name"></field>
+					<field name="tipo"></field>
+				</tree>
+			</field>
+		</record>
+
+	<!-- Vista de Formulario -->
+		<record id="prest_view_anticipo" model="ir.ui.view">
+			<field name="name">anticipos</field>
+			<field name="model">anticipo</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group string="Datos para el Anticipo">
+							<group>
+								<field name="name"></field>
+								<field name="tipo" widget='radio'></field>
+								<field name="fecha_actual"/>
+							</group>
+							<group>
+								<field name="metodo_de_pago" widget='radio'/>
+								<field name="acumulado"/>
+								<field name="monto_anticipo"/>
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+	</data>
+</odoo>

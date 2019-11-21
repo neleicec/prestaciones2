@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+
+<odoo>
+	<data>
+
+
+	<!-- Vista de Arbol -->
+		<record id="prest_view_liqui_tree" model="ir.ui.view">
+			<field name="name">prestac</field>
+			<field name="model">presta</field>
+			<field name="arch" type="xml">
+				<tree string="Liquida">
+					<field name="name"></field>
+					<field name="fecha_ing"></field>
+				</tree>
+			</field>
+		</record>
+
+	<!-- Vista de Formulario -->
+		<record id="prest_view_liqui" model="ir.ui.view">
+			<field name="name">prest3</field>
+			<field name="model">presta</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group string="Datos para el Informe de Liquidación">
+								<field name="name"></field>
+								<field name="fecha_ing"></field>
+								<field name="fecha_actual"></field>
+								<field name="dobleteB"/>
+							</group>
+							<group string= "Datos de las Prestaciones">
+								<field name="total_total"></field>
+								<field name="total_interes"/>
+								<field name= "doblete"/>
+							</group>
+							<group string= "Total a cancelar por Liquidaciones"> 
+								<field name= "final"/>
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+	</data>
+</odoo>

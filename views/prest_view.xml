@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+
+<odoo>
+	<data>
+		<record id="prest_view" model="ir.ui.view">
+			<field name="name">prest1</field>
+			<field name="model">prest</field>
+			<field name="arch" type="xml"> 
+				<form string="Prestaciones Sociales">
+					<sheet>
+						<group>
+							<group string="Datos del Empleado">
+								<field name="name"></field>
+								<field name="sueldo"></field>
+								<field name="wage_day1"></field>
+								<field name="sal_int"></field>
+								<field name = "historico_prest"></field>
+							</group>
+							
+							<group string="Datos de las Prestaciones">
+								<field name="trimestre"></field>
+								<field name="dias_sal"></field>
+								<field name="dias_h"></field>
+								<field name="alic_util"></field>
+								<field name="alic_vac"></field>
+								<field name="vac_concepto" invisible="1"></field>
+							</group>					
+							<group string="Cálculo Trimestral">
+								<field name="total_prest1"></field>
+								<field name="tasa_t"></field>
+								<field name="interes"></field>
+							</group>
+							<group string="Cáculo Anual">
+								<field name="total_prest2"></field>
+								<field name="anual"></field>
+							</group>
+						</group>
+					</sheet>
+            	</form>
+            </field>
+        </record>
+        Agregando el sueldo en empleados
+       <record id="wage_view" model="ir.ui.view">
+			<field name="name">prest2</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_form"></field>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='department_id']" position="after">
+					<field name="wage1"></field>
+					<field name="concepto_vac"></field>
+					<field name="historico_prestaciones"></field>
+				</xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+
+<odoo>
+	<data>
+		<!--Accion abrir el menu -->
+		<act_window id="action_prest_soc"
+			name="Social Benefits"
+			res_model="prest"/>
+		<!--Elemento de menú para abrir la lista-->
+		<menuitem id="menu_prest_soc"
+			name="Prestaciones Sociales"/>
+
+		<menuitem id="menu_prest_so"
+			name="Prestaciones"
+			parent="menu_prest_soc"
+			action="action_prest_soc"/>
+
+		
+		<record id="prest_menu_arbol" model="ir.actions.act_window">
+			<field name="name">Liquidación</field>
+			<field name="res_model">presta</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[]</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">Crea tu primera liquidacion
+				</p>
+			</field>
+		</record>
+
+		<record id="anticipo_menu_arbol" model="ir.actions.act_window">
+			<field name="name">Anticipo</field>
+			<field name="res_model">anticipo</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[]</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">Aún no tienes Anticipo
+				</p>
+			</field>
+		</record>
+
+		<menuitem id="menu_liqui"
+			name="liquidacion"
+			parent="menu_prest_soc"
+			action="prest_menu_arbol"/>
+
+
+		<menuitem id="menu_anticipo"
+			name="anticipo"
+			parent="menu_prest_soc"
+			action="anticipo_menu_arbol"/>
+		
+	</data>
+</odoo>
