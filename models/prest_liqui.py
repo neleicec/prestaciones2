@@ -1,6 +1,7 @@
 #  -*- coding: utf-8 -*- 
 
 from odoo import models, fields, api
+from datetime import date, datetime, time
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -18,9 +19,9 @@ class presta(models.Model):
 		related="name.date_in",
 		readonly=True)
 	# Selecciona la Fecha Actual
-	fecha_actual = fields.Date(
-		string='Fecha Actual',
-		required=True)
+	fecha_actual = fields.Date(string='Fecha Actual', required=True,
+        default=lambda self: fields.Date.to_string(date.today()),
+		readonly=True)
 
 	@api.multi
 	@api.depends('name')
@@ -61,9 +62,9 @@ class presta(models.Model):
 	def _totalfinal (self):
 		for record in self:
 			if record.contiene_doblete == False:
-				record.total_liquidar = record.total_pagar_anos_servicios + record.total_intereses 
+				record.total_liquidar = (record.total_pagar_anos_servicios + record.total_intereses)-(record.anticipo_acumulado)
 			else:
-				record.total_liquidar = record.total_pagar_anos_servicios + record.total_intereses + record.doblete
+				record.total_liquidar = (record.total_pagar_anos_servicios + record.total_intereses + record.doblete)-(record.anticipo_acumulado)
 	total_liquidar = fields.Float(
 		string= 'Total a Liquidar',
 		compute = '_totalfinal',
@@ -72,4 +73,21 @@ class presta(models.Model):
 		string = 'Doblete',
 		compute = '_doble',
 		store = True)
+	
+
+	@api.multi
+	@api.depends('name')
+	def _prueba(self):
+		for record in self:
+			sumador_anticipo = 0.0
+			gs = self.env['anticipo'].search([])
+			for j in gs:
+				if j.name == record.name:
+					sumador_anticipo = j.monto_anticipo + sumador_anticipo
+			record.anticipo_acumulado = sumador_anticipo
+
+	anticipo_acumulado = fields.Float(
+		string='Anticipo Acumulado',
+		compute='_prueba',
+		store=True)
 	
