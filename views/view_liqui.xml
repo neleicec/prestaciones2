@@ -11,7 +11,7 @@
 			<field name="arch" type="xml">
 				<tree string="Liquida">
 					<field name="name"></field>
-					<field name="fecha_ing"></field>
+					<field name="fecha_ingreso"></field>
 				</tree>
 			</field>
 		</record>
@@ -26,17 +26,17 @@
 						<group>
 							<group string="Datos para el Informe de Liquidación">
 								<field name="name"></field>
-								<field name="fecha_ing"></field>
+								<field name="fecha_ingreso"></field>
 								<field name="fecha_actual"></field>
-								<field name="dobleteB"/>
+								<field name="contiene_doblete"/>
 							</group>
 							<group string= "Datos de las Prestaciones">
-								<field name="total_total"></field>
-								<field name="total_interes"/>
+								<field name="total_pagar_anos_servicios"></field>
+								<field name="total_intereses"/>
 								<field name= "doblete"/>
 							</group>
 							<group string= "Total a cancelar por Liquidaciones"> 
-								<field name= "final"/>
+								<field name= "total_liquidar"/>
 							</group>
 						</group>
 					</sheet>

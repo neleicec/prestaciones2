@@ -22,11 +22,11 @@
                             
                             <tr>
                                 <td>Pago por Prestaciones</td>
-                                <td><span t-field="o.total_total"/></td>
+                                <td><span t-field="o.total_pagar_anos_servicios"/></td>
                             </tr>
                              <tr>
                                 <td>Intereses</td>
-                                <td><span t-field="o.total_interes"/></td>
+                                <td><span t-field="o.total_intereses"/></td>
                             </tr>
                              <tr>
                                 <td>Doblete</td>
@@ -34,7 +34,7 @@
                             </tr>
                              <tr>
                                 <td>Total a Pagar</td>
-                                <td><span t-field="o.final"/></td>
+                                <td><span t-field="o.total_liquidar"/></td>
                             </tr>
                         </table>
                         </div>

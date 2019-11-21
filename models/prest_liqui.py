@@ -12,7 +12,7 @@ class presta(models.Model):
 		string='Empleado', 
 		required=True)
 	# Muestra la Fecha de Ingreso
-	fecha_ing = fields.Date( 
+	fecha_ingreso = fields.Date( 
 		string='Fecha de Ingreso', 
 		required=True,
 		related="name.date_in",
@@ -33,44 +33,43 @@ class presta(models.Model):
 				if j.name == record.name:
 					sumador_anual = sumador_anual + j.acumulado_al_ano
 					sumador_interes = sumador_interes + j.interes_trimestral
-			record.total_total = sumador_anual
-			record.total_interes = sumador_interes
-				
+			record.total_pagar_anos_servicios = sumador_anual
+			record.total_intereses = sumador_interes
 
-	total_total = fields.Float(
+	total_pagar_anos_servicios = fields.Float(
 		string='Total a pagar por los años',
 		compute='_totaltotal',
 		store=True)
-	total_interes = fields.Float(
+	total_intereses = fields.Float(
 		string="Total Intereses",
 		compute="_totaltotal",
 		store=True)
 
-	@api.depends('dobleteB')
+	@api.depends('contiene_doblete')
 	def _doble(self):
 		for record in self:
-			if record.dobleteB == True:
-				record.doblete = record.total_total * 2
+			if record.contiene_doblete == True:
+				record.doblete = record.total_pagar_anos_servicios * 2
 			else:
 				record.doblete = 0.0
-	dobleteB = fields.Boolean(
+	contiene_doblete = fields.Boolean(
 		string= 'Contiene Doblete',
 		store = True)
 	
 	
-	@api.depends('name','dobleteB')
+	@api.depends('name','contiene_doblete')
 	def _totalfinal (self):
 		for record in self:
-			if record.dobleteB == False:
-				record.final = record.total_total + record.total_interes 
+			if record.contiene_doblete == False:
+				record.total_liquidar = record.total_pagar_anos_servicios + record.total_intereses 
 			else:
-				record.final = record.total_total + record.total_interes + record.doblete
-	final = fields.Float(
+				record.total_liquidar = record.total_pagar_anos_servicios + record.total_intereses + record.doblete
+	total_liquidar = fields.Float(
 		string= 'Total a Liquidar',
 		compute = '_totalfinal',
 		store = True)
 	doblete = fields.Float(
-		string = 'Total Doblete',
+		string = 'Doblete',
 		compute = '_doble',
 		store = True)
 	
