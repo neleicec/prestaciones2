@@ -50,7 +50,7 @@ class presta(models.Model):
 	def _doble(self):
 		for record in self:
 			if record.contiene_doblete == True:
-				record.doblete = record.total_pagar_anos_servicios * 2
+				record.doblete = record.total_pagar_anos_servicios * 1
 			else:
 				record.doblete = 0.0
 	contiene_doblete = fields.Boolean(

@@ -36,8 +36,8 @@
 								<field name= "doblete"/>
 							</group>
 							<group string= "Total a cancelar por Liquidaciones"> 
-								<field name= "total_liquidar"/>
 								<field name= "anticipo_acumulado"/>
+								<field name= "total_liquidar"/>
 							</group>
 						</group>
 					</sheet>
