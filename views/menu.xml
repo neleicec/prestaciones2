@@ -4,7 +4,7 @@
 	<data>
 		<!--Accion abrir el menu -->
 		<act_window id="action_prest_soc"
-			name="Social Benefits"
+			name="Prestaciones Sociales"
 			res_model="prest"/>
 		<!--Elemento de menú para abrir la lista-->
 		<menuitem id="menu_prest_soc"
@@ -41,13 +41,13 @@
 		</record>
 
 		<menuitem id="menu_liqui"
-			name="liquidacion"
+			name="Liquidación"
 			parent="menu_prest_soc"
 			action="prest_menu_arbol"/>
 
 
 		<menuitem id="menu_anticipo"
-			name="anticipo"
+			name="Anticipo"
 			parent="menu_prest_soc"
 			action="anticipo_menu_arbol"/>
 		

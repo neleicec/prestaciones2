@@ -1,6 +1,7 @@
 #  -*- coding: utf-8 -*- 
 
 from odoo import models, fields, api, exceptions
+from datetime import date, datetime, time
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -17,9 +18,9 @@ class anticipo_prestaciones(models.Model):
         selection=[('normal','Normal'),('excepcional','Excepcional')],
 		required=True)
     #Fecha en la que se solicito la Anticipación
-   	fecha_actual = fields.Date(
-		string='Fecha Actual',
-		required=True)
+   	fecha_actual = fields.Date(string='Fecha Actual', required=True,
+        default=lambda self: fields.Date.to_string(date.today()),
+		readonly=True)
 	metodo_de_pago = fields.Selection( 
         string='Metodo de Pago',
         selection=[('nomina','Nómina'),('externo','Externo')],
