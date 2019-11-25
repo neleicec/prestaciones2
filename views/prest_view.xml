@@ -18,6 +18,7 @@
 							</group>
 							
 							<group string="Datos de las Prestaciones">
+								<field name="fecha_actual"/>
 								<field name="trimestre"></field>
 								<field name="dias_metodo_trimestral"></field>
 								<field name="dias_adicionales"></field>

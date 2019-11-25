@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*- 
 
 from odoo import models, fields, api
+from datetime import date, datetime, time
+import logging
+
+_logger = logging.getLogger(__name__)
 # CAMPOS TRIMESTRALES
 class prest(models.Model):
 	_name='prest'
@@ -13,6 +17,9 @@ class prest(models.Model):
 		required=True,
 		default='trimestre1', 
 		help='Indique el trimestre a calcular')
+	fecha_actual = fields.Date(string='Fecha Actual', required=True,
+        default=lambda self: fields.Date.to_string(date.today()),
+		readonly=True)
 	sueldo = fields.Float(
 		string='Sueldo',
 		digits=(16,2), 
@@ -119,6 +126,22 @@ class prest(models.Model):
 
 	# CAMPOS ANUALES 
 
+	# @api.multi
+	# @api.depends('name')
+	# def _acumulado_trimestral(self):
+	# 	for record in self:
+	# 		sumador_anual = 0.0
+	# 		sumador_interes = 0.0
+	# 		gs = self.env['prest'].search([])
+	# 		for j in gs:
+	# 			if j.name == record.name:
+	# 				sumador_anual = sumador_anual + j.acumulado_al_ano
+	# 				sumador_interes = sumador_interes + j.interes_trimestral
+	# 		record.total_pagar_anos_servicios = sumador_anual
+	# 		record.total_intereses = sumador_interes
+
+
+	
 	@api.depends('name')
 	def _diah(self):
 		for record in self:
