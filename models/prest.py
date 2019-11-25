@@ -90,7 +90,7 @@ class prest(models.Model):
 		for record in self:
 			record.prestamo_trimestral = (record.salario_integral * record.dias_metodo_trimestral)
 	prestamo_trimestral= fields.Float(
-		string='Acumulado Trimestral', 
+		string='Trimestre', 
 		readonly=True, 
 		compute='_total1',
 		store=True)
