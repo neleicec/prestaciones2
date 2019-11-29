@@ -107,17 +107,27 @@ class prest(models.Model):
 		for record in self:
 			if record.trimestre == 'trimestre4':
 				record.prestamo_adicional = (record.salario_integral * record.dias_adicionales) 
-				record.acumulado_al_ano = (record.prestamo_trimestral + record.prestamo_adicional)
 	prestamo_adicional= fields.Float(
 		string='Acumulado Adicional', 
 		readonly=True, 
 		compute='_trim',
 		store=True,
 		help='Indica cuánto lleva acumulado el empleado por los dias adicionales')			
+
+	@api.depends('name')
+	def _acumulado_trimestral(self):
+		for record in self:
+			suma_de_trimestre = 0.0
+			gs = self.env['prest'].search([])
+			for j in gs:
+				if (j.name == record.name):
+					suma_de_trimestre = suma_de_trimestre + j.prestamo_trimestral
+			record.acumulado_al_ano = suma_de_trimestre
+
 	acumulado_al_ano= fields.Float(
 		string='Acumulado al año',
 		readonly=True,
-		compute='_trim',
+		compute='_acumulado_trimestral',
 		required=True,
 		default= 0.0,
 		digits=(26,2),
@@ -125,27 +135,11 @@ class prest(models.Model):
 		help= 'indica el monto acumulado durante los "4" trimestres del año')
 
 	# CAMPOS ANUALES 
-
-	# @api.multi
-	# @api.depends('name')
-	# def _acumulado_trimestral(self):
-	# 	for record in self:
-	# 		sumador_anual = 0.0
-	# 		sumador_interes = 0.0
-	# 		gs = self.env['prest'].search([])
-	# 		for j in gs:
-	# 			if j.name == record.name:
-	# 				sumador_anual = sumador_anual + j.acumulado_al_ano
-	# 				sumador_interes = sumador_interes + j.interes_trimestral
-	# 		record.total_pagar_anos_servicios = sumador_anual
-	# 		record.total_intereses = sumador_interes
-
-
 	
 	@api.depends('name')
 	def _diah(self):
 		for record in self:
-			if (record.name.years_service) <= 2.0:
+			if (record.name.years_service) <= 1.0:
 				dias_adicionales = 0.0
 			else: 
 				years_service2 = float(record.name.years_service)

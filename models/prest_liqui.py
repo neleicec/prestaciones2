@@ -32,7 +32,7 @@ class presta(models.Model):
 			gs = self.env['prest'].search([])
 			for j in gs:
 				if j.name == record.name:
-					sumador_anual = sumador_anual + j.acumulado_al_ano
+					sumador_anual = j.acumulado_al_ano
 					sumador_interes = sumador_interes + j.interes_trimestral
 			record.total_pagar_anos_servicios = sumador_anual
 			record.total_intereses = sumador_interes
