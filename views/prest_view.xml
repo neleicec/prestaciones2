@@ -13,6 +13,7 @@
 								<field name="name"></field>
 								<field name="sueldo"></field>
 								<field name="salario_diario"></field>
+								<field name="salario_diario_con_incidencias"></field>
 								<field name="salario_integral"></field>
 								<field name = "historicoPrestaciones"></field>
 							</group>
@@ -32,7 +33,6 @@
 								<field name="interes_trimestral"></field>
 							</group>
 							<group string="Cáculo Anual">
-								<!-- <field name="sumatoria_trimestral"></field> -->
 								<field name="prestamo_adicional"></field>
 								<field name="acumulado_al_ano"></field>
 							</group>

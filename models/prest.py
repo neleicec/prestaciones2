@@ -5,6 +5,7 @@ from datetime import date, datetime, time
 import logging
 
 _logger = logging.getLogger(__name__)
+
 # CAMPOS TRIMESTRALES
 class prest(models.Model):
 	_name='prest'
@@ -46,6 +47,50 @@ class prest(models.Model):
 	dias_metodo_trimestral = fields.Integer(
 		string='Dias', 
 		default=_dias, 
+		readonly=True,
+		store=True)
+
+	@api.multi
+	@api.depends('name')
+	def _salario_con_incidencias(self):
+		sumatoria = 0.0
+		for prestacion in self: #Consulta Registro de Prestaciones
+			gs = self.env['hr.payslip'].search([]) #Consulta los registros de la Nómina
+			gl = self.env['hr.payslip.line'].search([]) #Consulta de los Registros de los Detalles de las Nóminas
+			for nomina in gs:
+				for detalle in gl:
+					if nomina.id == detalle.slip_id: #Filtro para la Nómina
+						if detalle.code == 'SMI':
+							if nomina.employee_id == prestacion.name:
+								desde = str(nomina.date_from)
+								hasta = str(nomina.date_to)
+								desde_int = int(desde[:4])
+								hasta_int = int(hasta[:4])
+								fecha_presta = str(prestacion.fecha_actual)
+								fecha_presta_int = int(fecha_presta[:4])
+								if desde_int == fecha_presta_int:
+									mes_desde_int = int(desde[3:5])
+									mes_hasta_int = int(hasta[3:5])
+									if mes_desde_int == 1 or mes_desde_int == 2 or mes_desde_int == 3: #Pimer Trimestre
+										if prestacion.trimestre == 'trimestre1':
+											sumatoria += detalle.total
+									if mes_desde_int == 4 or mes_desde_int == 5 or mes_desde_int == 6: #Segundo Trimestre
+										if prestacion.trimestre == 'trimestre2':
+											sumatoria += detalle.total
+									if mes_desde_int == 7 or mes_desde_int == 8 or mes_desde_int == 9: #Tercer Trimestre
+										if prestacion.trimestre == 'trimestre3':
+											sumatoria += detalle.total
+									if mes_desde_int == 10 or mes_desde_int == 11 or mes_desde_int == 12: #Cuarto Trimestre
+										if prestacion.trimestre == 'trimestre4':
+											sumatoria += detalle.total
+								desde = None
+								hasta = None
+								fecha_presta = None
+			prestacion.salario_diario_con_incidencias = sumatoria + prestacion.salario_diario
+	salario_diario_con_incidencias = fields.Float(
+		string='Salario + Incidencias',
+		digits=(26,2),
+		compute='_salario_con_incidencias',
 		readonly=True,
 		store=True)
 
