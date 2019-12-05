@@ -51,7 +51,7 @@ class prest(models.Model):
 		store=True)
 
 	@api.multi
-	@api.depends('name')
+	@api.depends('name', 'trimestre')
 	def _salario_con_incidencias(self):
 		sumatoria = 0.0
 		for prestacion in self: #Consulta Registro de Prestaciones
@@ -59,7 +59,7 @@ class prest(models.Model):
 			gl = self.env['hr.payslip.line'].search([]) #Consulta de los Registros de los Detalles de las Nóminas
 			for nomina in gs:
 				for detalle in gl:
-					if nomina.id == detalle.slip_id: #Filtro para la Nómina
+					if nomina.id == detalle.slip_id.id: #Filtro para la Nómina
 						if detalle.code == 'SMI':
 							if nomina.employee_id == prestacion.name:
 								desde = str(nomina.date_from)
@@ -69,20 +69,20 @@ class prest(models.Model):
 								fecha_presta = str(prestacion.fecha_actual)
 								fecha_presta_int = int(fecha_presta[:4])
 								if desde_int == fecha_presta_int:
-									mes_desde_int = int(desde[3:5])
-									mes_hasta_int = int(hasta[3:5])
-									if mes_desde_int == 1 or mes_desde_int == 2 or mes_desde_int == 3: #Pimer Trimestre
+									mes_desde_int = int(desde[5:7])
+									mes_hasta_int = int(hasta[5:7])
+									if (mes_desde_int == 1) or (mes_desde_int == 2) or (mes_desde_int == 3): #Pimer Trimestre
 										if prestacion.trimestre == 'trimestre1':
-											sumatoria += detalle.total
-									if mes_desde_int == 4 or mes_desde_int == 5 or mes_desde_int == 6: #Segundo Trimestre
+											sumatoria += detalle.amount
+									if (mes_desde_int == 4) or (mes_desde_int == 5) or (mes_desde_int == 6): #Segundo Trimestre
 										if prestacion.trimestre == 'trimestre2':
-											sumatoria += detalle.total
-									if mes_desde_int == 7 or mes_desde_int == 8 or mes_desde_int == 9: #Tercer Trimestre
+											sumatoria += detalle.amount
+									if (mes_desde_int == 7) or (mes_desde_int == 8) or (mes_desde_int == 9): #Tercer Trimestre
 										if prestacion.trimestre == 'trimestre3':
-											sumatoria += detalle.total
-									if mes_desde_int == 10 or mes_desde_int == 11 or mes_desde_int == 12: #Cuarto Trimestre
+											sumatoria += detalle.amount
+									if (mes_desde_int == 10) or (mes_desde_int == 11) or (mes_desde_int == 12): #Cuarto Trimestre
 										if prestacion.trimestre == 'trimestre4':
-											sumatoria += detalle.total
+											sumatoria += detalle.amount
 								desde = None
 								hasta = None
 								fecha_presta = None
