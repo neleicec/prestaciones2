@@ -87,23 +87,49 @@ class prest(models.Model):
 								hasta = None
 								fecha_presta = None
 			prestacion.salario_diario_con_incidencias = sumatoria + prestacion.salario_diario
+		for record in self:
+			record.salario_diario = record.sueldo / 30
+			record.salario_integral = ((record.sueldo/30) + record.alicuota_utilidades + record.vac_concepto + prestacion.salario_diario_con_incidencias)
 	salario_diario_con_incidencias = fields.Float(
 		string='Salario + Incidencias',
 		digits=(26,2),
 		compute='_salario_con_incidencias',
 		readonly=True,
 		store=True)
-
-	@api.depends('name')
-	def _saldia(self):
-		for record in self:
-			record.salario_diario = record.sueldo / 30
 	salario_diario= fields.Float(
 		string='Salario Diario', 
 		digits=(26,2), 
-		compute='_saldia', 
+		compute='_salario_con_incidencias', 
 		readonly=True,
 		store=True)
+	alicuota_utilidades= fields.Float(
+		string='Alicuota Utilidades', 
+		digits=(26,2),
+		compute='_salario_con_incidencias', 
+		readonly=True,
+		store=True)
+	alicuota_vacaciones= fields.Float(
+		string='Alicuota Vacaciones', 
+		digits=(26,2), 
+		compute='_salario_con_incidencias',
+		store=True)
+	salario_integral= fields.Float(
+		string='Salario Integral', 
+		digits=(26,2), 
+		readonly=True,
+		compute='_salario_con_incidencias',
+		store=True)
+
+	# @api.depends('name')
+	# def _saldia(self):
+	# 	for record in self:
+	# 		record.salario_diario = record.sueldo / 30
+	# salario_diario= fields.Float(
+	# 	string='Salario Diario', 
+	# 	digits=(26,2), 
+	# 	compute='_saldia', 
+	# 	readonly=True,
+	# 	store=True)
 
 	@api.depends('name')
 	def _alic(self):
@@ -126,16 +152,16 @@ class prest(models.Model):
 		compute='_vac',
 		store=True)
 
-	@api.depends('name')
-	def _int(self):
-		for record in self:
-			record.salario_integral = ((record.sueldo/30)+ record.alicuota_utilidades + record.vac_concepto)
-	salario_integral= fields.Float(
-		string='Salario Integral', 
-		digits=(26,2), 
-		readonly=True,
-		compute='_int',
-		store=True)
+	# @api.depends('name')
+	# def _int(self):
+	# 	for record in self:
+	# 		record.salario_integral = ((record.sueldo/30)+ record.alicuota_utilidades + record.vac_concepto)
+	# salario_integral= fields.Float(
+	# 	string='Salario Integral', 
+	# 	digits=(26,2), 
+	# 	readonly=True,
+	# 	compute='_int',
+	# 	store=True)
 
 	@api.depends('name')
 	def _total1(self):
