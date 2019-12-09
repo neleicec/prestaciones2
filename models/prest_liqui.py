@@ -90,4 +90,10 @@ class presta(models.Model):
 		string='Anticipo Acumulado',
 		compute='_prueba',
 		store=True)
+
+	elegir_metodo = fields.Selection( 
+        string='Elegir Metodo',
+        selection=[('metodo1','Metodo 1'),('metodo2','Metodo 2')],
+        required=True,
+		help= "Elegir el metodo de mayor cantidad")
 	

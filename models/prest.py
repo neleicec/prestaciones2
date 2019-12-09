@@ -91,11 +91,12 @@ class prest(models.Model):
 			record.salario_diario = record.sueldo / 30
 			record.salario_integral = ((record.sueldo/30) + record.alicuota_utilidades + record.vac_concepto + prestacion.salario_diario_con_incidencias)
 	salario_diario_con_incidencias = fields.Float(
-		string='Salario + Incidencias',
+		string='Salario Diario',
 		digits=(26,2),
 		compute='_salario_con_incidencias',
 		readonly=True,
-		store=True)
+		store=True,
+		help= "Es el Salario diario con las incidencias incluidas")
 	salario_diario= fields.Float(
 		string='Salario Diario', 
 		digits=(26,2), 

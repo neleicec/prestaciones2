@@ -39,6 +39,9 @@
 								<field name= "anticipo_acumulado"/>
 								<field name= "total_liquidar"/>
 							</group>
+							<group string= "Elegir Metodo">
+								<field name= "elegir_metodo" widget='radio'/>
+							</group>
 						</group>
 					</sheet>
 				</form>
