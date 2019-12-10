@@ -33,7 +33,7 @@
 								<field name="interes_trimestral"></field>
 							</group>
 							<group string="Cáculo Anual">
-								<field name="prestamo_adicional"></field>
+								<field name="acumulado_adicional"></field>
 								<field name="acumulado_al_ano"></field>
 							</group>
 						</group>
