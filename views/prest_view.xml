@@ -12,7 +12,7 @@
 							<group string="Datos del Empleado">
 								<field name="name"></field>
 								<field name="sueldo"></field>
-								<field name="salario_diario" invisible="1"></field>
+								<field name="salario_diario" invisible="0"></field>
 								<field name="salario_diario_con_incidencias"></field>
 								<field name="salario_integral"></field>
 								<field name = "historicoPrestaciones"></field>
