@@ -35,6 +35,7 @@
 							<group string="Cáculo Anual">
 								<field name="acumulado_adicional"></field>
 								<field name="acumulado_al_ano"></field>
+								<field name="acumulado_intereses"/>
 							</group>
 						</group>
 					</sheet>

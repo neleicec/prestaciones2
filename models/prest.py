@@ -167,6 +167,25 @@ class prest(models.Model):
 		store=True,
 		help= 'indica el monto acumulado durante los "4" trimestres del año')
 
+	@api.depends('name')
+	def _AcumuladoDeIntereses(self):
+		for record in self:
+			acumulado_de_interes = 0.0
+			gs = self.env['prest'].search([])
+			for intereses in gs:
+				if (intereses.name == record.name):
+					acumulado_de_interes = acumulado_de_interes + intereses.interes_trimestral
+			record.acumulado_intereses = acumulado_de_interes
+	acumulado_intereses = fields.Float(
+		string='Acumulado de Intereses',
+		readonly=True,
+		compute='_AcumuladoDeIntereses',
+		required=True,
+		default= 0.0,
+		digits=(26,2),
+		store=True,
+		help= 'indica el monto acumulado de los Intereses Trimestrales')
+
 	# CAMPOS ANUALES 
 	
 	@api.depends('name')
