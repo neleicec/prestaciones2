@@ -125,6 +125,9 @@ class prest(models.Model):
 	@api.depends('name')
 	def _total1(self):
 		for record in self:
+			_logger.debug(record.prestamo_trimestral)
+			_logger.debug(record.salario_integral)
+			_logger.debug(record.dias_metodo_trimestral)
 			record.prestamo_trimestral = (record.salario_integral * record.dias_metodo_trimestral)
 	prestamo_trimestral= fields.Float(
 		string='Trimestre', 

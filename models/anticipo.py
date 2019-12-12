@@ -35,7 +35,7 @@ class anticipo_prestaciones(models.Model):
 			gs = self.env['prest'].search([])
 			for j in gs:
 				if j.name == record.name:
-					sumador_anual = sumador_anual + j.acumulado_al_ano		
+					sumador_anual = j.acumulado_al_ano		
 			record.acumulado = sumador_anual
 			if record.monto_anticipo == 0.0:
 				return
@@ -49,7 +49,7 @@ class anticipo_prestaciones(models.Model):
 				return
 			
 	acumulado = fields.Float(
-		string='Acumulado',
+		string='Record Acumulado',
 		compute='_anos_acumulados',
 		store=True,
 		default=1.0)
