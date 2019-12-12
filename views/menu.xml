@@ -15,6 +15,17 @@
 			parent="menu_prest_soc"
 			action="action_prest_soc"/>
 
+		<record id="anticipo_menu_arbol" model="ir.actions.act_window">
+			<field name="name">Anticipo</field>
+			<field name="res_model">anticipo</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[]</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">Aún no tienes Anticipo
+				</p>
+			</field>
+		</record>
 		
 		<record id="prest_menu_arbol" model="ir.actions.act_window">
 			<field name="name">Liquidación</field>
@@ -28,28 +39,15 @@
 			</field>
 		</record>
 
-		<record id="anticipo_menu_arbol" model="ir.actions.act_window">
-			<field name="name">Anticipo</field>
-			<field name="res_model">anticipo</field>
-			<field name="view_type">form</field>
-			<field name="view_mode">tree,form</field>
-			<field name="domain">[]</field>
-			<field name="help" type="html">
-				<p class="oe_view_nocontent_create">Aún no tienes Anticipo
-				</p>
-			</field>
-		</record>
+		<menuitem id="menu_anticipo"
+			name="Anticipo"
+			parent="menu_prest_soc"
+			action="anticipo_menu_arbol"/>
 
 		<menuitem id="menu_liqui"
 			name="Liquidación"
 			parent="menu_prest_soc"
 			action="prest_menu_arbol"/>
-
-
-		<menuitem id="menu_anticipo"
-			name="Anticipo"
-			parent="menu_prest_soc"
-			action="anticipo_menu_arbol"/>
 		
 	</data>
 </odoo>
