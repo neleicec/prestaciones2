@@ -132,17 +132,21 @@ class prest(models.Model):
 		compute='_total1',
 		store=True)
 
-	@api.depends('trimestre')
+	@api.depends('name')
 	def _trim(self):
 		for record in self:
-			if record.trimestre == 'trimestre4':
-				record.prestamo_adicional = (record.salario_integral * record.dias_adicionales) 
+			adicional = 0.0
+			gs = self.env['prest'].search([])
+			for metodo_adicional in gs:
+				if (metodo_adicional.name == record.name):
+					adicional = adicional + (metodo_adicional.salario_integral * metodo_adicional.dias_adicionales) 
+			record.acumulado_adicional = adicional
 	acumulado_adicional= fields.Float(
 		string='Acumulado Adicional', 
 		readonly=True, 
 		compute='_trim',
 		store=True,
-		help='Indica cuánto lleva acumulado el empleado por los dias adicionales')			
+		help='Indica cuánto lleva acumulado el empleado por los dias adicionales')
 
 	@api.depends('name')
 	def _acumulado_trimestral(self):
@@ -153,7 +157,6 @@ class prest(models.Model):
 				if (j.name == record.name):
 					suma_de_trimestre = suma_de_trimestre + j.prestamo_trimestral
 			record.acumulado_al_ano = suma_de_trimestre
-
 	acumulado_al_ano= fields.Float(
 		string='Acumulado al año',
 		readonly=True,
