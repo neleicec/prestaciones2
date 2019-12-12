@@ -38,7 +38,7 @@ class presta(models.Model):
 			record.total_intereses = sumador_interes
 
 	total_pagar_anos_servicios = fields.Float(
-		string='Total a pagar por los años',
+		string='Record Acumulado',
 		compute='_totaltotal',
 		store=True)
 	total_intereses = fields.Float(
@@ -62,9 +62,9 @@ class presta(models.Model):
 	def _totalfinal (self):
 		for record in self:
 			if record.contiene_doblete == False:
-				record.total_liquidar = (record.total_pagar_anos_servicios + record.total_intereses)-(record.anticipo_acumulado)
+				record.total_liquidar = (record.total_pagar_anos_servicios)-(record.anticipo_acumulado)
 			else:
-				record.total_liquidar = (record.total_pagar_anos_servicios + record.total_intereses + record.doblete)-(record.anticipo_acumulado)
+				record.total_liquidar = (record.total_pagar_anos_servicios + record.doblete)-(record.anticipo_acumulado)
 	total_liquidar = fields.Float(
 		string= 'Total a Liquidar',
 		compute = '_totalfinal',

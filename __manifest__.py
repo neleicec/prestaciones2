@@ -11,5 +11,5 @@
 	'version': '1.0',
 	'license': 'LGPL-3',
 	'category': 'Human Resources',
-	'data': ['views/prest_view.xml','views/menu.xml','views/view_liqui.xml','views/report.xml','views/anticipo_view.xml'],
+	'data': ['views/prest_view.xml','views/menu.xml','views/view_liqui.xml','views/report.xml','views/anticipo_view.xml','views/reporte_anticipo.xml'],
 }
