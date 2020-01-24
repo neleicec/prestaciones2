@@ -39,6 +39,23 @@
 			</field>
 		</record>
 
+		<record id="prestamo_menu_arbol" model="ir.actions.act_window">
+			<field name="name">Prestamos</field>
+			<field name="res_model">prestamo</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[]</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">No hay Prestamos por Prestaciones Sociales
+				</p>
+			</field>
+		</record>
+
+		<menuitem id="menu_prestamo"
+			name="Prestamos"
+			parent="menu_prest_soc"
+			action="prestamo_menu_arbol"/>
+
 		<menuitem id="menu_anticipo"
 			name="Anticipo"
 			parent="menu_prest_soc"

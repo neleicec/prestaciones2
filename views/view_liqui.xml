@@ -29,15 +29,18 @@
 								<field name="fecha_ingreso"></field>
 								<field name="fecha_actual"></field>
 								<field name="contiene_doblete"/>
+								<field name="meses_trabajados_despues_del_ano"/>
+								<field name="dias_trabajados_luego_de_liquidacion"/>
 							</group>
 							<group string= "Datos de las Prestaciones">
-								<field name="total_pagar_anos_servicios"></field>
-								<field name="total_intereses"/>
+								<field name="acumuladoPrestaciones"></field>
+								<field name="acumuladoAdicional"/>
 								<field name= "doblete"/>
 							</group>
 							<group string= "Total a cancelar por Liquidaciones"> 
 								<field name= "anticipo_acumulado"/>
 								<field name= "total_liquidar"/>
+								<field name= "salarioIntegral" invisible ="1"/>
 							</group>
 							<group string= "Elegir Metodo">
 								<field name= "elegir_metodo" widget='radio'/>

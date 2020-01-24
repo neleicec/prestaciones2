@@ -11,13 +11,18 @@
 						<group>
 							<group string="Datos del Empleado">
 								<field name="name"></field>
-								<field name="sueldo"></field>
-								<field name="salario_diario" invisible="0"></field>
 								<field name="salario_diario_con_incidencias"></field>
 								<field name="salario_integral"></field>
-								<field name = "historicoPrestaciones"></field>
 							</group>
-							
+							<group>
+							</group>
+							<group>
+								<field name="sueldo"></field>
+								<field name="salario_diario"></field>
+								<field name ="historicoPrestaciones"></field>
+							</group>
+							<group>
+							</group>						
 							<group string="Datos de las Prestaciones">
 								<field name="fecha_actual"/>
 								<field name="trimestre"></field>
@@ -26,11 +31,15 @@
 								<field name="alicuota_utilidades"></field>
 								<field name="alicuota_vacaciones"></field>
 								<field name="vac_concepto" invisible="1"></field>
-							</group>					
+							</group>
+							<group>
+							</group>
 							<group string="Cálculo Trimestral">
 								<field name="prestamo_trimestral"></field>
 								<field name="tasa_trimestral"></field>
 								<field name="interes_trimestral"></field>
+							</group>
+							<group>
 							</group>
 							<group string="Cáculo Anual">
 								<field name="acumulado_adicional"></field>

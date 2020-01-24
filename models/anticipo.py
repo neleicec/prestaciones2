@@ -8,6 +8,12 @@ _logger = logging.getLogger(__name__)
 
 class anticipo_prestaciones(models.Model):
 	_name='anticipo'
+
+	# @api.multi
+    # def action_topay(self):
+	# 	self.write({'state': 'topay'})
+
+
 	# Barra de empleados
 	name = fields.Many2one('hr.employee', 
 		string='Empleado', 
@@ -23,7 +29,9 @@ class anticipo_prestaciones(models.Model):
 		readonly=True)
 	metodo_de_pago = fields.Selection( 
         string='Metodo de Pago',
-        selection=[('nomina','Nómina'),('externo','Externo')],
+        selection=[('nomina','Nómina'),
+					# ('externo','Externo')
+					],
         required=True)
 	
 	
@@ -31,12 +39,10 @@ class anticipo_prestaciones(models.Model):
 	@api.depends('name','tipo')
 	def _anos_acumulados(self):
 		for record in self:
-			sumador_anual = 0.0
-			gs = self.env['prest'].search([])
-			for j in gs:
-				if j.name == record.name:
-					sumador_anual = j.acumulado_al_ano		
-			record.acumulado = sumador_anual
+			if record.name.id != False:
+				self._cr.execute('SELECT acumulado_al_ano FROM prest WHERE name = '+str(record.name.id)+' ORDER BY id DESC LIMIT 1')
+				variable = self._cr.fetchall()
+				record.acumulado = float((variable[0])[0])
 			if record.monto_anticipo == 0.0:
 				return
 			else:
@@ -57,3 +63,19 @@ class anticipo_prestaciones(models.Model):
 		string='Monto del Anticipo',
 		store=True,
 		digits=(16,2))
+
+    # @api.multi
+    # def button_paid(self):
+    #     for record in self:
+    #         record.write({'state' : 'paid'})
+
+    # @api.multi
+    # def button_cancel(self):
+    #     for record in self:
+    #         record.write({'state' : 'cancel'})
+
+	state = fields.Selection([
+        ('paid', 'Pagado'),
+        ('topay', 'Por Pagar'),
+        ('cancel', 'Cancelado'),
+        ], default='topay', readonly=True)

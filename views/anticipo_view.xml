@@ -2,7 +2,7 @@
 
 <odoo>
 	<data>
-
+		
 
 	<!-- Vista de Arbol -->
 		<record id="prest_view_anticipo_tree" model="ir.ui.view">
@@ -22,6 +22,13 @@
 			<field name="model">anticipo</field>
 			<field name="arch" type="xml">
 				<form>
+					<header>
+						<button name="action_topay" string="Por Pagar" states="topay,paid,cancel" type="object"/>
+						<button name="button_paid" string="Pagado" states="paid" class="oe_highlight" type="object"/>
+            			<button name="button_cancel" string="Cancelar" type="object" states="cancel"/>
+
+						<field name="state" widget="statusbar" statusbar_visible="topay,paid,cancel"/>
+        			</header>
 					<sheet>
 						<group string="Datos para el Anticipo">
 							<group>

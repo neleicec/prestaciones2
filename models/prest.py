@@ -92,7 +92,7 @@ class prest(models.Model):
 			prestacion.alicuota_vacaciones = ((prestacion.sueldo/30)*(prestacion.vac_concepto) / 360)
 			prestacion.salario_integral = prestacion.alicuota_utilidades + prestacion.alicuota_vacaciones + prestacion.salario_diario_con_incidencias
 	salario_diario_con_incidencias = fields.Float(
-		string='Salario Diario',
+		string='Salario + Incidencias',
 		digits=(26,2),
 		compute='_salario_con_incidencias',
 		readonly=True,
@@ -125,9 +125,6 @@ class prest(models.Model):
 	@api.depends('name')
 	def _total1(self):
 		for record in self:
-			_logger.debug(record.prestamo_trimestral)
-			_logger.debug(record.salario_integral)
-			_logger.debug(record.dias_metodo_trimestral)
 			record.prestamo_trimestral = (record.salario_integral * record.dias_metodo_trimestral)
 	prestamo_trimestral= fields.Float(
 		string='Trimestre', 
@@ -233,6 +230,11 @@ class employee(models.Model):
 		string='Concepto Vacaciones', 
 		required=True, 
 		help="Número de días que le pagan al trabajador por concepto de vacaciones",
+		store=True)
+	concepto_utilidades = fields.Float(
+		string='Concepto Utilidades', 
+		required=True, 
+		help="Número de días que le pagan al trabajador por concepto de utilidades",
 		store=True)
 	historico_prestaciones = fields.Float(
 		string = 'Historico Prestaciones',

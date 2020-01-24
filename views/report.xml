@@ -22,13 +22,9 @@
                             
                             <tr>
                                 <td>Pago por Prestaciones</td>
-                                <td><span t-field="o.total_pagar_anos_servicios"/></td>
+                                <td><span t-field="o.acumuladoPrestaciones"/></td>
                             </tr>
-                             <tr>
-                                <td>Intereses</td>
-                                <td><span t-field="o.total_intereses"/></td>
-                            </tr>
-                             <tr>
+                            <tr>
                                 <td>Doblete</td>
                                 <td><span t-field="o.doblete"/></td>
                             </tr>

@@ -3,7 +3,7 @@
 <odoo>
     <data>
         <report id = "report_anticipo"
-                string = "Reporte de Anticipos"
+                string = "Reporte de Anticipo"
                 model = "anticipo"
                 report_type = "qweb-pdf"
                 name = "prestsoc1.report_anticipo_template"
@@ -21,20 +21,19 @@
                             </tr>
                             
                             <tr>
-                                <td>Pago por Prestaciones</td>
-                                <td><span t-field="o.total_pagar_anos_servicios"/></td>
+                                <td>Pagado en</td>
+                                <td><span t-field="o.metodo_de_pago"/></td>
+                            </tr>
+                            <tr>
+                                <td>Fecha</td>
+                                <td><span t-field="o.fecha_actual"/></td>
                             </tr>
                              <tr>
-                                <td>Intereses</td>
-                                <td><span t-field="o.total_intereses"/></td>
-                            </tr>
-                             <tr>
-                                <td>Doblete</td>
-                                <td><span t-field="o.doblete"/></td>
-                            </tr>
-                             <tr>
-                                <td>Total a Pagar</td>
-                                <td><span t-field="o.total_liquidar"/></td>
+                                <td>Tipo del Anticipo</td>
+                                <td><span t-field="o.tipo"/></td>
+                                <td></td>
+                                <td>Anticipo Solicitado</td>
+                                <td><span t-field="o.monto_anticipo"/></td>
                             </tr>
                         </table>
                         </div>
